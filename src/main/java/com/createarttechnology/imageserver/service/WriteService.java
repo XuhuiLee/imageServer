@@ -59,7 +59,7 @@ public class WriteService {
     private String writeFile(InputStream inputStream) throws Exception {
         String dirPath = InnerUtil.getDirPath();
         String fileName = InnerUtil.getFileName();
-        String filePath = dirPath + "\\" + fileName;
+        String filePath = dirPath + "/" + fileName;
         File dir = new File(dirPath);
         if (!dir.exists()) {
             dir.mkdir();

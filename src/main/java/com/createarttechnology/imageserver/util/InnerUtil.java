@@ -19,7 +19,7 @@ public class InnerUtil {
     }
 
     public static String getDirPath() {
-        return ImageServerConstants.ROOT_PATH + "\\" + getDateString();
+        return ImageServerConstants.ROOT_PATH + "/" + getDateString();
     }
 
     public static String getFileName() {

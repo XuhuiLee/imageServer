@@ -18,7 +18,7 @@ public class ReadService {
     private static final Logger logger = Logger.getLogger(ReadService.class);
 
     public void transferFile(String dirName, String fileName, HttpServletResponse response) {
-        File file = new File(ImageServerConstants.ROOT_PATH + "\\" + dirName + "\\" + fileName);
+        File file = new File(ImageServerConstants.ROOT_PATH + "/" + dirName + "/" + fileName);
         if (!file.exists()) {
             response.setStatus(404);
         }
