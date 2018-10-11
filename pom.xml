@@ -10,7 +10,7 @@
     <packaging>war</packaging>
 
     <build>
-        <finalName>image_server</finalName>
+        <finalName>img</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
