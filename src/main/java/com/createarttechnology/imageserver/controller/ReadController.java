@@ -22,7 +22,7 @@ public class ReadController {
     @Resource
     private ReadService readService;
 
-    @RequestMapping(value = "/img/{picName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{picName}", method = RequestMethod.GET)
     public void getImage(@PathVariable("picName") String picName, HttpServletResponse response) {
         if (StringUtil.isEmpty(picName) || picName.length() < 25 || picName.indexOf('_') < 0) {
             response.setStatus(400);

@@ -26,7 +26,7 @@ public class WriteController {
     @Resource
     private WriteService writeService;
 
-    @RequestMapping(value = "/upload-pic-file", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
     public BaseResp<String> uploadPicFile(@RequestParam MultipartFile picFile) {
         try {
             InputStream inputStream = picFile.getInputStream();
@@ -37,7 +37,7 @@ public class WriteController {
         }
     }
 
-    @RequestMapping(value = "/upload-pic-base64", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload/base64", method = RequestMethod.POST)
     public BaseResp<String> uploadPicBase64(@RequestParam String picBase64) {
         try {
             InputStream inputStream = new Base64InputStream(new ByteArrayInputStream(picBase64.getBytes()));
@@ -48,7 +48,7 @@ public class WriteController {
         }
     }
 
-    @RequestMapping(value = "/upload-pic-url", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload/url", method = RequestMethod.POST)
     public BaseResp<String> uploadPicUrl(@RequestParam String picUrl) {
         try {
             URL url = new URL(picUrl);
