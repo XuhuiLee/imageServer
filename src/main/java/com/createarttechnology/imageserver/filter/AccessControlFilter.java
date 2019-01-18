@@ -25,7 +25,7 @@ public class AccessControlFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
 
         String referer = req.getHeader("Referer");
-        if (StringUtil.isNotEmpty(referer) && !(referer.startsWith("http://localhost") || referer.startsWith("http://www.createarttechnology.com") || referer.startsWith("http://createarttechnology.com"))) {
+        if (StringUtil.isNotEmpty(referer) && !(referer.startsWith("http://local") || referer.startsWith("http://www.createarttechnology.com") || referer.startsWith("http://createarttechnology.com"))) {
             ((HttpServletResponse) response).setStatus(403);
             return;
         }
