@@ -1,10 +1,10 @@
 package com.createarttechnology.imageserver.service;
 
-import com.createarttechnology.imageserver.bean.BaseResp;
-import com.createarttechnology.imageserver.constants.ErrorInfo;
+import com.createarttechnology.common.BaseResp;
+import com.createarttechnology.common.ErrorInfo;
 import com.createarttechnology.imageserver.constants.ImageServerConstants;
 import com.createarttechnology.imageserver.util.InnerUtil;
-import com.createarttechnology.jutil.log.Logger;
+import com.createarttechnology.logger.Logger;
 import com.sun.imageio.plugins.bmp.BMPImageReader;
 import com.sun.imageio.plugins.bmp.BMPImageReaderSpi;
 import com.sun.imageio.plugins.gif.GIFImageReader;

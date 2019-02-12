@@ -2,7 +2,7 @@ package com.createarttechnology.imageserver.filter;
 
 import com.createarttechnology.jutil.AntiBotUtil;
 import com.createarttechnology.jutil.StringUtil;
-import com.createarttechnology.jutil.log.Logger;
+import com.createarttechnology.logger.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

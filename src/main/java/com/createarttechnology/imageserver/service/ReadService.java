@@ -1,13 +1,18 @@
 package com.createarttechnology.imageserver.service;
 
+import com.createarttechnology.common.BaseResp;
+import com.createarttechnology.common.ErrorInfo;
 import com.createarttechnology.imageserver.constants.ImageServerConstants;
-import com.createarttechnology.jutil.log.Logger;
+import com.createarttechnology.logger.Logger;
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicMatch;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Created by lixuhui on 2018/10/10.
@@ -16,6 +21,23 @@ import java.io.*;
 public class ReadService {
 
     private static final Logger logger = Logger.getLogger(ReadService.class);
+
+    public String[] listRoot() {
+        File root = new File(ImageServerConstants.ROOT_PATH);
+
+        logger.info(ImageServerConstants.ROOT_PATH);
+        return root.exists() ? root.list() : null;
+    }
+
+    public BaseResp<String[]> listDir(String dirName) {
+        File dir = new File(ImageServerConstants.ROOT_PATH + "/" + dirName);
+        if (!dir.exists() || !dir.isDirectory()) {
+            return new BaseResp<>(ErrorInfo.RESOURCE_NOT_FOUND);
+        }
+
+        String[] files = dir.list();
+        return new BaseResp<String[]>(ErrorInfo.SUCCESS).setData(files);
+    }
 
     public void transferFile(String dirName, String fileName, HttpServletResponse response) {
         File file = new File(ImageServerConstants.ROOT_PATH + "/" + dirName + "/" + fileName);

@@ -1,0 +1,16 @@
+#define($content)
+<div class="admin-content-body">
+    #foreach($dir in ${dirs})
+        <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf">
+                <strong class="am-text-primary am-text-lg" onclick="listDir('$!{dir}')">$!{dir}</strong>
+            </div>
+        </div>
+        <hr>
+        <ul class="am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-margin gallery-list" id="$!{dir}">
+        </ul>
+        <hr>
+    #end
+</div>
+<script src="/sf/js/image_server/page/list.js"></script>
+#end

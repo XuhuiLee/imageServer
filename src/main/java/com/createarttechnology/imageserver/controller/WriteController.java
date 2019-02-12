@@ -1,9 +1,9 @@
 package com.createarttechnology.imageserver.controller;
 
-import com.createarttechnology.imageserver.bean.BaseResp;
+import com.createarttechnology.common.BaseResp;
 import com.createarttechnology.imageserver.service.WriteService;
 import com.createarttechnology.jutil.StringUtil;
-import com.createarttechnology.jutil.log.Logger;
+import com.createarttechnology.logger.Logger;
 import com.google.common.collect.Maps;
 import org.apache.commons.codec.binary.Base64InputStream;
 import org.springframework.web.bind.annotation.RequestMapping;
