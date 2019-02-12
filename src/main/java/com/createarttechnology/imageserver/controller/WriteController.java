@@ -75,7 +75,7 @@ public class WriteController {
             resp.put("success", saveResp.success() ? 1 : 0);
             resp.put("message", saveResp.getMsg());
             if (saveResp.success()) {
-                resp.put("url", "/img/" + saveResp.getData());
+                resp.put("url", "/img/pic/" + saveResp.getData());
             }
         } catch (Exception e) {
             logger.error("uploadPicFile error, e:", e);

@@ -1,9 +1,11 @@
 ##<link href="/sf/css/header.css" rel="stylesheet"/>
-<header class="am-topbar admin-header">
-    <div class="am-topbar-brand am-topbar-brand-primary">
-        <a href="/"><strong>CreateArtTechnology</strong></a> <a href="/img"><small>/ img</small></a>
+<header class="am-topbar am-topbar-inverse admin-header">
+    <div class="am-g am-container">
+        <div class="am-u-lg-12">
+            <div class="am-topbar-brand am-topbar-brand-primary">
+                <a href="/"><strong>CreateArtTechnology</strong></a> <a href="/img"><small>/ img</small></a>
+            </div>
+        </div>
     </div>
-
-##    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
 
 </header>

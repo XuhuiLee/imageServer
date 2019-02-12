@@ -97,10 +97,16 @@ public class WriteService {
             MagicMatch match = Magic.getMagicMatch(file, false);
             String mimeType = match.getMimeType();
             ImageReader imageReader = getImageReaderByMimeType(mimeType);
-            imageReader.setInput(new FileImageInputStream(file));
+            FileImageInputStream stream = new FileImageInputStream(file);
+            imageReader.setInput(stream);
             int height = imageReader.getHeight(0);
             int width = imageReader.getWidth(0);
-            return String.format("%s_%s_%d_%d_%d", fileName, mimeType.substring(mimeType.indexOf('/') + 1), width, height, length);
+            File tmpFile = new File(filePath);
+            String finalFileName = String.format("%s_%s_%d_%d_%d", fileName, mimeType.substring(mimeType.indexOf('/') + 1), width, height, length);
+            stream.close();
+            File dstFile = new File(dirPath + "/" + finalFileName);
+            tmpFile.renameTo(dstFile);
+            return finalFileName;
         } catch (Exception e) {
             logger.error("read error, e:", e);
             file.delete();

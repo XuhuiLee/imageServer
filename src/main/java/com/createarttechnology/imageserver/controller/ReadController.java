@@ -27,7 +27,6 @@ public class ReadController {
     private static Pattern DIR_NAME_PATTERN = Pattern.compile("\\d{8}");
 
     private static Pattern PIC_LONG_NAME_PATTERN = Pattern.compile("\\d{19}_\\w{3,4}_\\d+_\\d+_\\d+");
-    private static Pattern PIC_SHORT_NAME_PATTERN = Pattern.compile("\\d{19}");
 
     @Resource
     private ReadService readService;
@@ -51,14 +50,11 @@ public class ReadController {
 
     @RequestMapping(value = "/pic/{picName}", method = RequestMethod.GET)
     public void getImage(@PathVariable String picName, HttpServletResponse response) {
-        if (StringUtil.isEmpty(picName) || !(PIC_LONG_NAME_PATTERN.matcher(picName).matches() || PIC_SHORT_NAME_PATTERN.matcher(picName).matches())) {
+        if (StringUtil.isEmpty(picName) || !PIC_LONG_NAME_PATTERN.matcher(picName).matches()) {
             response.setStatus(400);
         }
         String dirName = picName.substring(0, 8);
         String fileName = picName;
-        if (fileName.contains("_")) {
-            fileName = fileName.substring(0, fileName.indexOf('_'));
-        }
         if (StringUtil.isEmpty(dirName) || StringUtil.isEmpty(fileName)) {
             response.setStatus(400);
         }
