@@ -43,6 +43,7 @@ public class ReadController {
     public BaseResp<String[]> listDir(@PathVariable String dirName, HttpServletResponse response) {
         if (Strings.isNullOrEmpty(dirName) || dirName.length() != 8 || !DIR_NAME_PATTERN.matcher(dirName).matches()) {
             response.setStatus(400);
+            return null;
         }
 
         return readService.listDir(dirName);
@@ -52,11 +53,13 @@ public class ReadController {
     public void getImage(@PathVariable String picName, HttpServletResponse response) {
         if (StringUtil.isEmpty(picName) || !PIC_LONG_NAME_PATTERN.matcher(picName).matches()) {
             response.setStatus(400);
+            return;
         }
         String dirName = picName.substring(0, 8);
         String fileName = picName;
         if (StringUtil.isEmpty(dirName) || StringUtil.isEmpty(fileName)) {
             response.setStatus(400);
+            return;
         }
         readService.transferFile(dirName, fileName, response);
     }
