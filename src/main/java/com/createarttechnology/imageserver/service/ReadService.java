@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 /**
  * Created by lixuhui on 2018/10/10.
@@ -26,7 +27,12 @@ public class ReadService {
         File root = new File(ImageServerConstants.ROOT_PATH);
 
         logger.info(ImageServerConstants.ROOT_PATH);
-        return root.exists() ? root.list() : null;
+        String[] output = null;
+        if (root.exists()) {
+            output = root.list();
+            Arrays.sort(output);
+        }
+        return output;
     }
 
     public BaseResp<String[]> listDir(String dirName) {
