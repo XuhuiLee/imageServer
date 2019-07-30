@@ -1,20 +1,8 @@
 #define($content)
-    <div class="am-g am-container">
-        <div class="am-u-lg-12">
-            <div class="admin-content-body">
-                #foreach($dir in ${dirs})
-                    <div class="am-cf am-padding am-padding-bottom-0">
-                        <div class="am-fl am-cf">
-                            <strong class="am-text-primary am-text-lg" onclick="listDir('$!{dir}')" style="cursor: pointer;">$!{dir}</strong>
-                        </div>
-                    </div>
-                    <br>
-                    <ul class="am-avg-sm-2 am-avg-md-4 am-avg-lg-6 am-margin gallery-list" id="$!{dir}" style="display: none;">
-                    </ul>
-                    <hr>
-                #end
-            </div>
-        </div>
+<link rel="stylesheet" href="/sf/css/image_server/page/waterfall.css" />
+    <div id="cells-container">
+        <div id="cells"></div>
+        <div id="loader"><span id="loader-text">... 正在加载 ...</span></div>
     </div>
-<script src="/sf/js/image_server/page/list.js"></script>
+<script src="/sf/js/image_server/page/waterfall.js"></script>
 #end

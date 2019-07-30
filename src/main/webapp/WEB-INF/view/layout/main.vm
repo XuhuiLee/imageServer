@@ -36,8 +36,7 @@
     <link rel="canonical" href="http://www.example.com/">
     -->
 
-    <link rel="stylesheet" href="/sf/amazeui/css/amazeui.min.css">
-    <link rel="stylesheet" href="/sf/amazeui/css/admin.css">
+    <link rel="stylesheet" href="/sf/css/image_server/page/main.css">
 
     <title>C.A.T图库</title>
 
@@ -45,7 +44,6 @@
     <!--[if (gte IE 9)|!(IE)]><!-->
     <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <!--<![endif]-->
-    <script src="/sf/amazeui/js/amazeui.min.js"></script>
 
 </head>
 <body>
@@ -56,11 +54,7 @@
     <![endif]-->
     #parse("/layout/header.vm")
 
-    <div class="am-cf admin-main">
-        <div class="admin-content">
-            $content
-        </div>
-    </div>
+    $content
 
     <!--[if lt IE 9]>
     <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>

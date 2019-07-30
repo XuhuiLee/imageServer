@@ -1,11 +1,6 @@
 ##<link href="/sf/css/header.css" rel="stylesheet"/>
-<header class="am-topbar am-topbar-inverse admin-header">
-    <div class="am-g am-container">
-        <div class="am-u-lg-12">
-            <div class="am-topbar-brand am-topbar-brand-primary">
-                <a href="/"><strong>CreateArtTechnology</strong></a> <a href="/img"><small>/ img</small></a>
-            </div>
-        </div>
+<header class="am-topbar">
+    <div class="am-topbar-brand">
+        <a href="/"><strong>CreateArtTechnology</strong></a> <a href="/img"><small>/ img</small></a>
     </div>
-
 </header>
