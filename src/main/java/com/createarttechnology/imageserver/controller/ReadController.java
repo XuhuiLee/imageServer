@@ -74,7 +74,7 @@ public class ReadController {
         String[] dirs = readService.listRoot();
         if (dirs == null || dirs.length <= 0) {
             return new BaseResp<>(ErrorInfo.INVALID_PARAMS);
-        } else {
+        } else if (StringUtil.isEmpty(dir)) {
             dir = dirs[0];
         }
         int idx = -1;
