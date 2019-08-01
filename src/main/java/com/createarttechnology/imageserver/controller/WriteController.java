@@ -1,6 +1,7 @@
 package com.createarttechnology.imageserver.controller;
 
 import com.createarttechnology.common.BaseResp;
+import com.createarttechnology.imageserver.constants.ImageServerConstants;
 import com.createarttechnology.imageserver.service.WriteService;
 import com.createarttechnology.jutil.StringUtil;
 import com.createarttechnology.logger.Logger;
@@ -29,17 +30,23 @@ public class WriteController {
     @Resource
     private WriteService writeService;
 
+    /**
+     * 根据文件上传
+     */
     @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
     public BaseResp<String> uploadPicFile(@RequestParam MultipartFile picFile) {
         try {
             InputStream inputStream = picFile.getInputStream();
-            return writeService.savePicFile(inputStream);
+            return writeService.savePicFile(inputStream, ImageServerConstants.TYPE_IMAGE);
         } catch (Exception e) {
             logger.error("uploadPicFile error, e:", e);
             return new BaseResp<>();
         }
     }
 
+    /**
+     * 根据base64（截图）上传
+     */
     @RequestMapping(value = "/upload/base64", method = RequestMethod.POST)
     public BaseResp<String> uploadPicBase64(@RequestParam String picBase64) {
         if (StringUtil.isNotEmpty(picBase64) && picBase64.startsWith("data:image/png;base64,")) {
@@ -47,31 +54,37 @@ public class WriteController {
         }
         try {
             InputStream inputStream = new Base64InputStream(new ByteArrayInputStream(picBase64.getBytes()));
-            return writeService.savePicFile(inputStream);
+            return writeService.savePicFile(inputStream, ImageServerConstants.TYPE_IMAGE);
         } catch (Exception e) {
             logger.error("uploadPicBase64 error, e:", e);
             return new BaseResp<>();
         }
     }
 
+    /**
+     * 根据url上传
+     */
     @RequestMapping(value = "/upload/url", method = RequestMethod.POST)
     public BaseResp<String> uploadPicUrl(@RequestParam String picUrl) {
         try {
             URL url = new URL(picUrl);
             InputStream inputStream = url.openConnection().getInputStream();
-            return writeService.savePicFile(inputStream);
+            return writeService.savePicFile(inputStream, ImageServerConstants.TYPE_IMAGE);
         } catch (Exception e) {
             logger.error("uploadPicUrl error, e:", e);
             return new BaseResp<>();
         }
     }
 
+    /**
+     * 给Editor.md提供的专用上传接口
+     */
     @RequestMapping(value = "/upload/editormd-image-file", method = RequestMethod.POST)
     public Map<String, Object> uploadEditormdImageFile(@RequestParam("editormd-image-file") MultipartFile picFile) {
         Map<String, Object> resp = Maps.newHashMap();
         try {
             InputStream inputStream = picFile.getInputStream();
-            BaseResp<String> saveResp = writeService.savePicFile(inputStream);
+            BaseResp<String> saveResp = writeService.savePicFile(inputStream, ImageServerConstants.TYPE_IMAGE);
             resp.put("success", saveResp.success() ? 1 : 0);
             resp.put("message", saveResp.getMsg());
             if (saveResp.success()) {

@@ -12,6 +12,10 @@ public class PicBean {
     private int height;
     private int size;
 
+    private boolean longPic;
+    private boolean gifPic;
+    private boolean smallPic;
+
     public String getFileName() {
         return fileName;
     }
@@ -68,6 +72,30 @@ public class PicBean {
         this.size = size;
     }
 
+    public boolean isLongPic() {
+        return longPic;
+    }
+
+    public void setLongPic(boolean longPic) {
+        this.longPic = longPic;
+    }
+
+    public boolean isGifPic() {
+        return gifPic;
+    }
+
+    public void setGifPic(boolean gifPic) {
+        this.gifPic = gifPic;
+    }
+
+    public boolean isSmallPic() {
+        return smallPic;
+    }
+
+    public void setSmallPic(boolean smallPic) {
+        this.smallPic = smallPic;
+    }
+
     @Override
     public String toString() {
         return "PicBean{" +
@@ -78,6 +106,9 @@ public class PicBean {
                 ", width=" + width +
                 ", height=" + height +
                 ", size=" + size +
+                ", longPic=" + longPic +
+                ", gifPic=" + gifPic +
+                ", smallPic=" + smallPic +
                 '}';
     }
 }

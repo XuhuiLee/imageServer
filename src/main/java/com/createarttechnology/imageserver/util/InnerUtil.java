@@ -15,8 +15,8 @@ public class InnerUtil {
 
     private static volatile int COUNTER = 0;
 
+    // {timestamp}{id}_{type}_{width}_{height}_{size}
     private static Pattern PIC_LONG_NAME_PATTERN = Pattern.compile("((\\d{8})\\d{11})_(\\w{3,4})_(\\d+)_(\\d+)_(\\d+)");
-
 
     private static String getDateString() {
         return DateFormatUtils.format(System.currentTimeMillis(), "yyyyMMdd");
@@ -26,18 +26,41 @@ public class InnerUtil {
         return DateFormatUtils.format(System.currentTimeMillis(), "yyyyMMddHHmmssSSS");
     }
 
-    public static String getDirPath() {
-        return ImageServerConstants.ROOT_PATH + "/" + getDateString();
+    /**
+     * 写入时的dir
+     */
+    public static String getWriteDirPath(int type) {
+        return getDirRootPath(type) + "/" + getDateString();
     }
 
-    public static String getFileName() {
-        String result = String.format("%s%02d", getMillisString(), COUNTER++);
+    /**
+     * 获取pic或prev的root
+     */
+    public static String getDirRootPath(int type) {
+        switch (type) {
+            case ImageServerConstants.TYPE_IMAGE:
+                return ImageServerConstants.IMAGE_ROOT_PATH;
+            case ImageServerConstants.TYPE_PREVIEW:
+                return ImageServerConstants.PREVIEW_ROOT_PATH;
+            default:
+                return "/";
+        }
+    }
+
+    /**
+     * 临时文件名，最终文件的前缀
+     */
+    public static String getFilePrefix() {
+        String result = String.format("%s%02d", getMillisString(), COUNTER++ % 100);
         if (COUNTER >= 100) {
-            COUNTER = 0;
+            COUNTER %= 100;
         }
         return result;
     }
 
+    /**
+     * 根据文件名转成bean
+     */
     public static PicBean parsePicBean(String picName) {
         Matcher matcher = PIC_LONG_NAME_PATTERN.matcher(picName);
         if (!matcher.matches()) {
@@ -52,6 +75,10 @@ public class InnerUtil {
         bean.setWidth(StringUtil.convertInt(matcher.group(4), 0));
         bean.setHeight(StringUtil.convertInt(matcher.group(5), 0));
         bean.setSize(StringUtil.convertInt(matcher.group(6), 0));
+
+        bean.setLongPic(bean.getWidth() * 1.5d < bean.getHeight());
+        bean.setGifPic("gif".equals(bean.getType()));
+        bean.setSmallPic(bean.getWidth() <= ImageServerConstants.SMALL_PIC_THRESHOLD_INT || bean.getHeight() <= ImageServerConstants.SMALL_PIC_THRESHOLD_INT);
 
         return bean;
     }

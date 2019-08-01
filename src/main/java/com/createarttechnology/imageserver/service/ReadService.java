@@ -1,13 +1,13 @@
 package com.createarttechnology.imageserver.service;
 
-import com.createarttechnology.common.BaseResp;
-import com.createarttechnology.common.ErrorInfo;
 import com.createarttechnology.imageserver.constants.ImageServerConstants;
+import com.createarttechnology.imageserver.util.InnerUtil;
 import com.createarttechnology.logger.Logger;
 import net.sf.jmimemagic.Magic;
 import net.sf.jmimemagic.MagicMatch;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,34 +23,46 @@ public class ReadService {
 
     private static final Logger logger = Logger.getLogger(ReadService.class);
 
-    public String[] listRoot() {
-        File root = new File(ImageServerConstants.ROOT_PATH);
+    @Resource
+    private WriteService writeService;
 
-        logger.info(ImageServerConstants.ROOT_PATH);
+    /**
+     * list根目录
+     */
+    public String[] listRoot(int type) {
+        File root = new File(InnerUtil.getDirRootPath(type));
         String[] output = null;
-        if (root.exists()) {
+        if (root.exists() && root.isDirectory()) {
             output = root.list();
-            Arrays.sort(output);
+            if (output != null) {
+                Arrays.sort(output);
+            }
         }
         return output;
     }
 
-    public BaseResp<String[]> listDir(String dirName) {
-        File dir = new File(ImageServerConstants.ROOT_PATH + "/" + dirName);
+    /**
+     * list目录
+     */
+    public String[] listDir(String dirName, int type) {
+        File dir = new File(InnerUtil.getDirRootPath(type) + "/" + dirName);
         if (!dir.exists() || !dir.isDirectory()) {
-            return new BaseResp<>(ErrorInfo.RESOURCE_NOT_FOUND);
+            return null;
         }
-
-        String[] files = dir.list();
-        return new BaseResp<String[]>(ErrorInfo.SUCCESS).setData(files);
+        return dir.list();
     }
 
-    public void transferFile(String dirName, String fileName, HttpServletResponse response) {
-        File file = new File(ImageServerConstants.ROOT_PATH + "/" + dirName + "/" + fileName);
+    /**
+     * 读文件
+     */
+    public void transferFile(String dirName, String fileName, HttpServletResponse response, int type) {
+        File file = new File(InnerUtil.getDirRootPath(type) + "/" + dirName + "/" + fileName);
         if (!file.exists()) {
-            response.setStatus(404);
+            // 预览图不存在，尝试将原图缩小，然后继续后续步骤
+            if (type != ImageServerConstants.TYPE_PREVIEW || !writeService.scaleFile(dirName, fileName)) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            }
         }
-        logger.info("filePath={}", file.getAbsolutePath());
 
         byte[] buffer = new byte[1024];
         OutputStream outputStream;
@@ -60,7 +72,7 @@ public class ReadService {
             inputStream = new FileInputStream(file);
         } catch (Exception e) {
             logger.error("init error, e:", e);
-            response.setStatus(500);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
         }
 
@@ -71,10 +83,10 @@ public class ReadService {
             MagicMatch match = Magic.getMagicMatch(file, false);
             String mimeType = match.getMimeType();
             response.setContentType(mimeType);
-            response.setStatus(200);
+            response.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
             logger.error("write error, e:", e);
-            response.setStatus(500);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         } finally {
             try {
                 outputStream.flush();
