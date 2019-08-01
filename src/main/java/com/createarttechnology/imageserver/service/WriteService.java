@@ -118,7 +118,7 @@ public class WriteService {
 
             /* 调整后的图片的宽度和高度 - 按照压缩比例计算出新的宽度和高度 */
             int toWidth = (int) (picBean.getWidth() * resizeTimes);
-            int toHeight = (int) (picBean.getWidth() * resizeTimes);
+            int toHeight = (int) (picBean.getHeight() * resizeTimes);
 
             /* 新生成结果图片 */
             BufferedImage result = new BufferedImage(toWidth, toHeight, BufferedImage.TYPE_INT_RGB);
