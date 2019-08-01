@@ -91,6 +91,11 @@ public class WriteService {
             return false;
         }
 
+        File dir = new File(InnerUtil.getDirRootPath(ImageServerConstants.TYPE_PREVIEW) + "/" + dirName);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+
         // 长图、gif、小图先不缩小了
         if (picBean.isLongPic() || picBean.isGifPic() || picBean.isSmallPic()) {
             try {
@@ -103,10 +108,6 @@ public class WriteService {
         }
 
         try {
-            File dir = new File(InnerUtil.getDirRootPath(ImageServerConstants.TYPE_PREVIEW) + "/" + dirName);
-            if (!dir.exists()) {
-                dir.mkdir();
-            }
             /*
             这段是抄来的
             copy from https://blog.csdn.net/chwshuang/article/details/64923333
