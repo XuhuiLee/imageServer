@@ -76,7 +76,7 @@ public class InnerUtil {
         bean.setHeight(StringUtil.convertInt(matcher.group(5), 0));
         bean.setSize(StringUtil.convertInt(matcher.group(6), 0));
 
-        bean.setLongPic(bean.getWidth() * 1.5d < bean.getHeight());
+        bean.setLongPic(bean.getWidth() * 1.5d < bean.getHeight() || bean.getHeight() * 1.5d < bean.getWidth());
         bean.setGifPic("gif".equals(bean.getType()));
         bean.setSmallPic(bean.getWidth() <= ImageServerConstants.SMALL_PIC_THRESHOLD_INT || bean.getHeight() <= ImageServerConstants.SMALL_PIC_THRESHOLD_INT);
 
