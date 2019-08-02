@@ -24,11 +24,11 @@ public interface ImageServerConstants {
     /**
      * 小于这个值的算小图
      */
-    int SMALL_PIC_THRESHOLD_INT = 500;
+    int SMALL_PIC_THRESHOLD_INT = 300;
 
     /**
      * 缩放到这个大小
      */
-    double PREVIEW_PIC_WIDTH = 500;
+    double PREVIEW_PIC_WIDTH = 300;
 
 }

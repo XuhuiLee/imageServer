@@ -91,6 +91,11 @@ public class WriteService {
             return false;
         }
 
+        File dir = new File(InnerUtil.getDirRootPath(ImageServerConstants.TYPE_PREVIEW) + "/" + dirName);
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+
         // 长图、gif、小图先不缩小了
         if (picBean.isLongPic() || picBean.isGifPic() || picBean.isSmallPic()) {
             try {
@@ -103,10 +108,6 @@ public class WriteService {
         }
 
         try {
-            File dir = new File(InnerUtil.getDirRootPath(ImageServerConstants.TYPE_PREVIEW) + "/" + dirName);
-            if (!dir.exists()) {
-                dir.mkdir();
-            }
             /*
             这段是抄来的
             copy from https://blog.csdn.net/chwshuang/article/details/64923333
@@ -117,7 +118,7 @@ public class WriteService {
 
             /* 调整后的图片的宽度和高度 - 按照压缩比例计算出新的宽度和高度 */
             int toWidth = (int) (picBean.getWidth() * resizeTimes);
-            int toHeight = (int) (picBean.getWidth() * resizeTimes);
+            int toHeight = (int) (picBean.getHeight() * resizeTimes);
 
             /* 新生成结果图片 */
             BufferedImage result = new BufferedImage(toWidth, toHeight, BufferedImage.TYPE_INT_RGB);
